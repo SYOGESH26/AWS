@@ -10,7 +10,8 @@ Commands used :
   * --instance-type
   * --key-name 
   * --security-group-ids
-  * --subnet-id
+  * --subnet-id![2](https://github.com/user-attachments/assets/5099e512-5651-4608-9788-1ee17d344c22)
+
   * --block-device-mappings '[{"DeviceName":"/dev/sdb","Ebs":{"VolumeType":"gp2","VolumeSize":"25"}]' 
       (if we not mention --block-device-mappings by default it takes 8 GB)
 
