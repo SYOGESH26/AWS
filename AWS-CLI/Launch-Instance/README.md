@@ -1,31 +1,29 @@
-#In this I explain lauch-instance.sh file.
+I This I explain about "Instance-with-user-data.sh and launch-instance.sh" files
+First, I explain about Lainch-instance.sh file.
+In that What commands is used ?, What is the use of those commands ? How those commands is help to launch Instance With outputs?
+-------------------------------------------------------------
+Commands Used:-
+-------------------------------------------------------------
+* aws run ec2-instances (This is the basic command to launch EC2 Instance in CLI)
+* --image-id (This command is used to specify OS in CLI, Whether it is Ubuntu or Red-Hat or something.)
+* --instance-type (This command is used to specify instance, Whether it is g-series, m-series, c-series,...etc.)
+* --count (How many Instances you need to launch at the time, We need to specify number here.)
+* --Key-name (In this stage you need to specify to Key, Which is help to SSH in realtime.)
+* --subnet-id (Here, We need to specify subnet group.)
+* --security-group-ids (Choose security group,In that you specify about ingress and egress.)
+* --block-device-mappings (It is helpful to specify storage, If we not use by default Instance launch with 8GB storage)
+* --tag-specifications (It is used to give name of the instance to identify easily when we have so many instances in that region.)
+* --query (Is used to extract only certain field)
+* --output text (Mention I want output in text).
+  ![Screenshot 2025-06-18 111636](https://github.com/user-attachments/assets/632e915b-7c60-4712-b572-c48c891cab58)
+  ------------------------------------------------------------
+  Output of Launch-instance.sh file
+  ------------------------------------------------------------
 
-Commands used :
-
-1.aws ec2 run-instances 'This command is used to launch Instance in AWS-CLI'
-
-  To launch instance we need additional date i.e,
-  
-  * --image-id
-  * --instance-type
-  * --key-name 
-  * --security-group-ids
-  * --subnet-id![2](https://github.com/user-attachments/assets/5099e512-5651-4608-9788-1ee17d344c22)
-
-  * --block-device-mappings '[{"DeviceName":"/dev/sdb","Ebs":{"VolumeType":"gp2","VolumeSize":"25"}]' 
-      (if we not mention --block-device-mappings by default it takes 8 GB)
-
-  * If we want give name for the instance use,
-
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value="Instance One"}]'
-
-  * If we want userdata (userdata works at the time of first boot omly).
-
-    "--file://filename"
-
-2.aws ec2 describe-instances 'This command is used to describe launching instances AWS'
-
- If want only specific information use
-
- * --query 'Reservations[].Instances[].{ID:InstanceID,State:State.Name}'
- * --output table
+  ------------------------------------------------------------
+  Second file:- "Instance-with-user-data.sh"
+  -----------------------------------------------------------
+  Commands are:-
+  * Same commands used only extra two commands are added in Instance-with-user-data.sh file.
+  * userdata (Userdata file is used at the of first boot.)
+  * associate-public-ip-address (Add IPV4 address at the time of launch instance.)
