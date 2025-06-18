@@ -1,16 +1,14 @@
 #!/bin/bash
 aws ec2 run-instances \
-	--image-id \
-	--instance-type \
-	--count \
-	--key-name \
-	--subnet-id \
-	--security-group-ids \
-        --device-block-mappings '[{"DeviceName":"/dev/sdb","Ebs":{"VolumeSize":25,"VolumeType":"gp2"}}]' \
+	--image-id ami-042b4708b1d05f512 \
+	--instance-type t3.micro \
+	--count 1 \
+	--key-name LINUX \
+	--subnet-id subnet-0ae8579834cbcaf34 \
+	--security-group-ids sg-07171e8fa0eb2f751 \
+        --block-device-mappings '[{"DeviceName":"/dev/sdb","Ebs":{"VolumeSize":25,"VolumeType":"gp2"}}]' \
         --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=linux}]' \
 	--associate-public-ip-address \
-	--user-data file://userdata
-
-aws ec2 describe-instances \
-	--query 'Reservations[].Instances[].{ID:InstanceID,State:State.Name}' \
-	--output table
+	--user-data file://userdata \
+	--query 'Instances[0].[InstanceId,PublicIpAddress]' \
+	--output text
