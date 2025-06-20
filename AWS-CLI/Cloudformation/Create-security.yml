@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create security group
+Resources:
+  MySecurityGroup:
+    Type: AWS::Ec2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH
+      VpcId: 
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+          Tags:
+            - Key: Name
+              Value: "SG"
