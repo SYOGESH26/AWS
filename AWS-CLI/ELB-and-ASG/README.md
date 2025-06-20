@@ -1,94 +1,75 @@
-#In this I explain ELB-and-ASG.sh file.
+#In this I explain about ELB-and-ASG.
+-------------------------------------
+File 1:-Launch Template
+-------------------------------------
+Commands used:-
+* aws ec2 create-launch-template (Command used to create template.)
+* --launch-template-name (Specify name of the template.)
+* --version-description (Describe version which help further when use to launch instance from template.)
+* --launch-template-data '{
+* "ImageId": "imageid" (Specify id which you want to create template.)
+* "KeyName": "Key"
+* "InstanceType": "Type" (Specify type of instance.)
+* "SecurityGroupIds": [" "] (specify security group.)
+* }'
 
-1. Create launch template.
-   * aws ec2 create-launch-template \
-   * --launch-template-name ubuntu \
-   * --version-description "v1" \
-   * --launch-template-data '{
-   * "ImageId": "ami-042b4708b1d05f512",
-   * "InstanceType": "t3.micro",
-   * "SecurityGroupIds": ["sg-0cb90b73f6b498377"],
-   * "KeyName": "LINUX",
-   * "BlockDeviceMappings": [
-   *  {
-   *    "DeviceName": "/dev/sdb",
-   *    "Ebs": {
-   *      "VolumeSize": 20,
-   *      "VolumeType": "gp2"
-   *    }
-   *   }
-   * ]
-   * }'
+  ![temp](https://github.com/user-attachments/assets/0f6b5b43-6d5e-408c-844e-03eb9ae6a5d5)
 
-   This helps to create Template with 20GB storage capacity.
+-----------------------------------
+File 2:-Targets.sh
+-----------------------------------
+Commands used:-
+* aws elbv2 create-target-group (Command used to create target.)
+* --target-group-name targetname
+* --protocol (Specify target type.)
+* --port (Spcify port.)
+* --vpc-id vpcid (Specify vpc id.)
+* --target-type (Specify targets.)
+* --health-check-protocol (Specify protocol.)
+* --health-check-path (Specify path)
 
-2.Launch instance from launch template
-   * aws ec2 run-instances \
-   * --launch-template LaunchTemplateName=ubuntu,Version=1 \
-   * --query 'Instances[0].InstanceId' \
-   * --output text)
+* --health-check-interval (Specify time.)
+* --health-check-timeout (Specify timeout in seconds.)
+* --healthy-threshold (Specify threshold time.)
+* --unhealthy-threshold (Specifu unhealthy threshold.)
+* aws ec2 register-targets (Command is used to specify targets.)
+* --target-group-arn Id
+* --targets ID=instanceid
 
-3.Create Target Groups
-  * aws elbv2 create-target-group \
-  * --name yogesh \
-  * --protocol HTTP \
-  * --port 80 \
-  * --vpc-id vpc-045774ae9176698dd \
-  * --health-check-protocol HTTP \
-  * --health-check-path / \
-  * --health-check-interval-seconds 30 \
-  * --health-check-timeout-seconds 5 \
-  * --healthy-threshold-count 5 \
-  * --unhealthy-threshold-count 2 \
-  * --target-type instance \
-  * --query 'TargetGroups[0].TargetGroupArn' \
-  * --output text)
+![target](https://github.com/user-attachments/assets/2e21c9fb-cff4-4140-b228-56fc054f6e37)
 
-  This helps to create target group addtional with health checkups.
-
-4.Register instances to targets group.
-  * aws elbv2 register-targets \
-  * --target-group-arn $TI \
-  * --targets Id=$IID
-
-  This helps to register instances to target group.
-
-5.Create load balancer
-  * aws elbv2 create-load-balancer \
-  * name ylb \
-  * --subnets subnet-0ee364cb4bc327550 subnet-0874547ec9c59a4d6 \
-  * --security-groups sg-07171e8fa0eb2f751 \
-  * --scheme internet-facing \
-  * --ip-address-type ipv4 \
-  * --type application \
-  * --query 'LoadBalancers[0].LoadBalancerArn' \
-  * --output text)
-
-  This helps to create load balancer 
-
-6.Create listener for load balancer.
-  * aws elbv2 create-listener \
-  * --load-balancer-arn $elb \
-  * --protocol HTTP \
-  * --port 80 \
-  * --default-actions Type=forward,TargetGroupArn=$TI
-
-  This help to create listener for load balancer.
-
-7.Create ASG.
-
-  * aws autoscaling create-auto-scaling-group \
-  * --auto-scaling-group-name ASG \
-  * --launch-template LaunchTemplateName=ubuntu,Version=1 \
-  * --max-size 5 \
-  * --min-size 2 \
-  * --desired-capacity 3 \
-  * --vpc-zone-identifier "subnet-0ee364cb4bc327550,subnet-0874547ec9c59a4d6" \
-  * --target-group-arns "paste arn"
-
-  This commands helps to create auto scaling groups. 
-
+------------------------------
+File 3:- ELB.sh
+------------------------------
+Commands used:-
+* aws elbv2 create-load-balancer (Create load balncer.)
+* --name
+* --scheme (Specift scheme.)
+* --type (Specify type of load balancer.)
+* --ip-address-type (Specify Ip address.)
+* --subnets "Specify subnets atleast two."
+* --security-group-ids "Specify groups"
+* aws elbv2 create-listener (Specify listener)
+* --load-balancer-arn Id
+* --protocol (Specify protocol.)
+* --port (Choose port.)
+* --default-actions Type=forward,TargerGroupArn <id>
   
+![elb](https://github.com/user-attachments/assets/8388d720-4889-4a85-bcc5-9857f9c82957)
 
+------------------------------
+File 4:-ASG.sh
+-------------------------------
+Commands used:-
+* aws autoscaling create-autoscaling-group
+* --autoscaling-scaling-group-name
+* --launch-template LaunchTemplateName
+* --max-size
+* --min-size
+* --desired-capacity
+* --vpc-identifier-zone 
+* --target-group-arns 
+
+![ASG](https://github.com/user-attachments/assets/89cc5530-0987-486e-a670-fad6145efae1)
 
 
