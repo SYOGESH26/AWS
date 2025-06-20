@@ -1,4 +1,6 @@
-#In this I explain about VPC folder.
+#In this I explain about security folder.
+-----------------------------------
+Folder: VPC
 -----------------------------------
 File 1:-vpc.sh
 ----------------------------------
@@ -71,4 +73,23 @@ Commands used:-
  * --gateway-id Igwid
    
  ![route](https://github.com/user-attachments/assets/1467feab-a662-4ec3-b820-6ed298c090ff)
+---------------------------------------
+Folder : NACL
+---------------------------------------
+File:nacl.sh
+---------------------------------------
+Commands used:-
+* aws ec2 create-network-acl (Create network acl.)(NACL which provide security at subnet level)
+* --vpc-id vpcid
+* aws ec2 create-network-acl-entry (Create network acl entry.)
+* --network-acl-id
+* --ingress (Which allow any port inside.)
+* --egress (Which deny any port inside.)
+* --protocol (specify protocol.)
+* --port-range From=80,To=80
+* --cidr-block 0.0.0.0/0
+* --rule-number 100
+* --rule-action (Specify allow or deny.)
+
+   ![nacl](https://github.com/user-attachments/assets/af2b6f47-d16a-4017-b7a5-441cb147fb98)
 
