@@ -7,8 +7,7 @@ aws ec2 create-route-table \
 
 subnet1=$(aws ec2 describe-subnets --query "Subnets[0].SubnetId" --output text)
 subnet2=$(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text | tr '\t' '\n' | sort | tail -n 1)
-subnet3=$(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text | tr '\t' '\n' | sort | tail -n 2) 
-
+subnet3=$(aws ec2 describe-subnets --query "Subnets[*].SubnetId" --output text | tr '\t' '\n' | sort | tail -n 2)
 #Associate subnets to Routetable
 
 aws ec2 associate-route-table \

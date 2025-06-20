@@ -18,7 +18,7 @@ aws s3 cp s3://27-11-2003/create-bucket.sh ~/AWS/AWS-CLI/
 
 #Command used to remove file from bucket.
 
-aws s3 rm s3://27-11-2003/create-bucket.sh
+aws s3 rm s3/27-11-2003/create-bucket.sh
 
 #Command used to remove folder from bucket.
 
