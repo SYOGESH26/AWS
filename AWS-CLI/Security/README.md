@@ -93,3 +93,50 @@ Commands used:-
 
    ![nacl](https://github.com/user-attachments/assets/af2b6f47-d16a-4017-b7a5-441cb147fb98)
 
+--------------------------------------
+Folder:-IAM and Key
+--------------------------------------
+File:-IAM.sh
+--------------------------------------
+Commands used:-
+* aws iam create-user --user-name username (Create user)
+* aws iam create-group --group-name group (Create name)
+* aws iam create-role --role-name role (create role)
+* aws iam add-user-to-group (Add user to group)
+* aws iam attach-user-policy (Attach policy to user)
+* policy-arn (Specify policy)
+
+![iam](https://github.com/user-attachments/assets/b1d57853-68c3-487e-9d78-6a2f41013b91)
+
+-------------------------------------
+File:-Key.sh
+------------------------------------
+Commands used:-
+* aws kms create-key --description "creating key" (Create key)
+* aws kms encrypt (encrypta created key)
+* --ket-id keyid
+* --plaintext fileb://plain.txt
+* --output text
+* --query CiphertextBlob > encrypted.b64
+* base64 -d encrypted.b64 > encrypted.bin
+* aws kmd decrypt (decrypts key)
+* --ciphertextblob fileb://encrypted.bin
+* --output text
+* --query Plaintext | base64 --decode > encrypted.txt
+
+
+![key encry](https://github.com/user-attachments/assets/ec408bc2-8875-428a-bb86-4abfbf95270a)
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
