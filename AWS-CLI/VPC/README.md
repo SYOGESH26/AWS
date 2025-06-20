@@ -1,70 +1,37 @@
-#In this I explain VPC.sh file.
+#In this I explain about VPC folder.
+-----------------------------------
+File 1:-vpc.sh
+----------------------------------
+Commands used:-
+* aws ec2 create-vpc (Command is used to create vpc.)
+* --region (Specify the region.)
+* --cidr-block (Specify the cidr-block range.)
+* --tag-specification "ResourceType=vpc,Tags=[{Key=Name,Value=VPC}]" (Give tag to the vpc which is easy to identify to further.)
 
-1.Create VPC.
+  ![vpc l1](https://github.com/user-attachments/assets/f2859cb2-a460-4812-8cb9-ddd78b9c757d)
 
-  Commands used:
+------------------------------------
+Output
 
-  * aws ec2 create-vpc \
-  * --cidr-block 10.0.0.0/22 \
-  * --region $REGION \
-  * --tag-specifications 'ResourceType=vpc,Tags=[{Key=Name,Value=Public}]' \
-  * --query 'Vpc.VpcId' --output text
+![vpc 1](https://github.com/user-attachments/assets/85b9e8ea-c090-433e-9aa0-35522d867a81)
 
-  This commands help to create vpc.
+------------------------------------
+File 2:- subnets.sh
+------------------------------------
+Commands used:-
+* aws ec2 create-subnet (This command is used to create subnet.)
+* --vpc-id vpcid (Specify the larger network.)
+* cidr-block (Specify the cidr-block.)
+* availability-zone (specify the zone.)
+* tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=subnet}]" (Give tag to the subnet which is easy to identify to further.)
 
-2.Create Subnet.
+  ![subnet1](https://github.com/user-attachments/assets/93eda348-aecc-4db4-af4a-d47cd46dc4ec)
 
-  Commands used:
+---------------------------------------
+Output:-
 
-  * aws ec2 create-subnet \
-  * --vpc-id $vpcid \
-  * --cidr-block 10.0.0.0/24 \
-  * --availability-zone ${REGION}a \
-  * --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=PublicSubnet}]' \
-  * --query 'Subnet.SubnetId' --output text)
+![subnet](https://github.com/user-attachments/assets/00ba4d57-5adf-47a7-b1a1-eb781da52074)
 
-  This commands help to create subnet.
 
-3.Create RouteTable.
 
-  Commands used:
-
-  * aws ec2 create-route-table \
-  * --vpc-id $vpcid \
-  * --query 'RouteTable.RouteTableId' --output text)
-
-  This commands help to create RouteTable.
-
-4.Associate subnet to route.
-
-  Commands used :
-
-  * aws ec2 associate-route-table \
-  * --subnet-id $subnet_id \
-  * --route-table-id $route_table_id
-
-  This commands help to associate subnets to routetable.
-
-5.Create Internet gateway.
-
-  * aws ec2 create-internet-gateway
-
-  This command help to create internet gateway.
-
-6.Attach Internet gateway.
-
-  * aws ec2 attach-internet-gateway \
-  * --vpc-id $vpc \
-  * --internet-gateway-id $gatewayid \
-
-  This commands help to attach internet gateway.
-
-7.Create Route.
-
-  * aws ec2 create-route \
-  * --route-table-id $routetable \
-  * destination 0.0.0.0/0 \
-  * --gateway-id $gatewayid
-
-  This commands help to create route.
 
